@@ -32,8 +32,12 @@ namespace RestWithASPNET5
 
             services.AddControllers();
 
+            // Context MySQL
             var connection = Configuration["MySQLConnection:MySQLConnectionString"];
             services.AddDbContext<MySQLContext>(options => options.UseMySql(connection));
+
+            // Versioning API
+            services.AddApiVersioning();
 
             // Dependency injection
             services.AddScoped<IPersonService, PersonService>();
