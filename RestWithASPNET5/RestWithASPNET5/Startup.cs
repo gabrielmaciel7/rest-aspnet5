@@ -8,6 +8,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using RestWithASPNET5.Models.Context;
+using RestWithASPNET5.Repositories;
+using RestWithASPNET5.Repositories.Implementations;
 using RestWithASPNET5.Services;
 using RestWithASPNET5.Services.Implementations;
 using System;
@@ -41,6 +43,7 @@ namespace RestWithASPNET5
 
             // Dependency injection
             services.AddScoped<IPersonService, PersonService>();
+            services.AddScoped<IPersonRepository, PersonRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
