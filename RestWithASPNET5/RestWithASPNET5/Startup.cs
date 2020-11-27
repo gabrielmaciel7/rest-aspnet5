@@ -48,9 +48,9 @@ namespace RestWithASPNET5
 
             // Dependency injection
             services.AddScoped<IPersonService, PersonService>();
-            services.AddScoped<IPersonRepository, PersonRepository>();
             services.AddScoped<IBookService, BookService>();
-            services.AddScoped<IBookRepository, BookRepository>();
+
+            services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

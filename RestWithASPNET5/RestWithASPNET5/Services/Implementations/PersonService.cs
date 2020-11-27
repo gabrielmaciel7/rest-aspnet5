@@ -6,36 +6,36 @@ namespace RestWithASPNET5.Services.Implementations
 {
     public class PersonService : IPersonService
     {
-        private readonly IPersonRepository _personRepository;
+        private readonly IGenericRepository<Person> _repository;
 
-        public PersonService(IPersonRepository personRepository)
+        public PersonService(IGenericRepository<Person> repository)
         {
-            _personRepository = personRepository;
+            _repository = repository;
         }
 
         public List<Person> FindAll()
         {
-            return _personRepository.FindAll();
+            return _repository.FindAll();
         }
 
         public Person FindById(long id)
         {
-            return _personRepository.FindById(id);
+            return _repository.FindById(id);
         }
 
         public Person Create(Person person)
         {
-            return _personRepository.Create(person);
+            return _repository.Create(person);
         }
 
         public Person Update(Person person)
         {
-            return _personRepository.Update(person);
+            return _repository.Update(person);
         }
 
         public void Delete(long id)
         {
-            _personRepository.Delete(id);
+            _repository.Delete(id);
         }
     }
 }

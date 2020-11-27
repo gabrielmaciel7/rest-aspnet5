@@ -6,36 +6,36 @@ namespace RestWithASPNET5.Services.Implementations
 {
     public class BookService : IBookService
     {
-        private readonly IBookRepository _bookRepository;
+        private readonly IGenericRepository<Book> _repository;
 
-        public BookService(IBookRepository bookRepository)
+        public BookService(IGenericRepository<Book> repository)
         {
-            _bookRepository = bookRepository;
+            _repository = repository;
         }
 
         public List<Book> FindAll()
         {
-            return _bookRepository.FindAll();
+            return _repository.FindAll();
         }
 
         public Book FindById(long id)
         {
-            return _bookRepository.FindById(id);
+            return _repository.FindById(id);
         }
 
         public Book Create(Book book)
         {
-            return _bookRepository.Create(book);
+            return _repository.Create(book);
         }
 
         public Book Update(Book book)
         {
-            return _bookRepository.Update(book);
+            return _repository.Update(book);
         }
 
         public void Delete(long id)
         {
-            _bookRepository.Delete(id);
+            _repository.Delete(id);
         }
     }
 }

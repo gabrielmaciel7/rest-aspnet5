@@ -7,7 +7,7 @@ using System.Linq;
 
 namespace RestWithASPNET5.Repositories.Implementations
 {
-    public class GenericRepository<T> : IGenericRepository where T : Base
+    public class GenericRepository<T> : IGenericRepository<T> where T : Base
     {
         private readonly MySQLContext _context;
         private readonly DbSet<T> _dataset;
