@@ -8,12 +8,12 @@ namespace RestWithASPNET5.Controllers
     [ApiVersion("1")]
     [ApiController]
     [Route("api/[controller]/v{version:apiVersion}")]
-    public class BooksController : ControllerBase
+    public class BookController : ControllerBase
     {
-        private readonly ILogger<BooksController> _logger;
-        private readonly IBooksService _bookService;
+        private readonly ILogger<BookController> _logger;
+        private readonly IBookService _bookService;
 
-        public BooksController(ILogger<BooksController> logger, IBooksService bookService)
+        public BookController(ILogger<BookController> logger, IBookService bookService)
         {
             _logger = logger;
             _bookService = bookService;
@@ -39,7 +39,7 @@ namespace RestWithASPNET5.Controllers
         }
 
         [HttpPost]
-        public IActionResult Create([FromBody] Books book)
+        public IActionResult Create([FromBody] Book book)
         {
             if (book == null)
             {
@@ -50,7 +50,7 @@ namespace RestWithASPNET5.Controllers
         }
 
         [HttpPut]
-        public IActionResult Update([FromBody] Books book)
+        public IActionResult Update([FromBody] Book book)
         {
             if (book == null)
             {

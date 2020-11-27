@@ -6,26 +6,26 @@ using System.Linq;
 
 namespace RestWithASPNET5.Repositories.Implementations
 {
-    public class BooksRepository : IBooksRepository
+    public class BookRepository : IBookRepository
     {
         private MySQLContext _context;
 
-        public BooksRepository(MySQLContext context)
+        public BookRepository(MySQLContext context)
         {
             _context = context;
         }
 
-        public List<Books> FindAll()
+        public List<Book> FindAll()
         {
             return _context.Books.ToList();
         }
 
-        public Books FindById(long id)
+        public Book FindById(long id)
         {
             return _context.Books.SingleOrDefault(Books => Books.Id.Equals(id));
         }
 
-        public Books Create(Books book)
+        public Book Create(Book book)
         {
             try
             {
@@ -40,7 +40,7 @@ namespace RestWithASPNET5.Repositories.Implementations
             return book;
         }
 
-        public Books Update(Books book)
+        public Book Update(Book book)
         {
             if (!Exists(book.Id)) return null;
 

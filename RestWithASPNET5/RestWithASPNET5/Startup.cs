@@ -1,12 +1,9 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using RestWithASPNET5.Models.Context;
 using RestWithASPNET5.Repositories;
 using RestWithASPNET5.Repositories.Implementations;
@@ -15,8 +12,6 @@ using RestWithASPNET5.Services.Implementations;
 using Serilog;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace RestWithASPNET5
 {
@@ -54,8 +49,8 @@ namespace RestWithASPNET5
             // Dependency injection
             services.AddScoped<IPersonService, PersonService>();
             services.AddScoped<IPersonRepository, PersonRepository>();
-            services.AddScoped<IBooksService, BooksService>();
-            services.AddScoped<IBooksRepository, BooksRepository>();
+            services.AddScoped<IBookService, BookService>();
+            services.AddScoped<IBookRepository, BookRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

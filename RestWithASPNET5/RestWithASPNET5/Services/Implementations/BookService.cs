@@ -4,31 +4,31 @@ using System.Collections.Generic;
 
 namespace RestWithASPNET5.Services.Implementations
 {
-    public class BooksService : IBooksService
+    public class BookService : IBookService
     {
-        private readonly IBooksRepository _bookRepository;
+        private readonly IBookRepository _bookRepository;
 
-        public BooksService(IBooksRepository bookRepository)
+        public BookService(IBookRepository bookRepository)
         {
             _bookRepository = bookRepository;
         }
 
-        public List<Books> FindAll()
+        public List<Book> FindAll()
         {
             return _bookRepository.FindAll();
         }
 
-        public Books FindById(long id)
+        public Book FindById(long id)
         {
             return _bookRepository.FindById(id);
         }
 
-        public Books Create(Books book)
+        public Book Create(Book book)
         {
             return _bookRepository.Create(book);
         }
 
-        public Books Update(Books book)
+        public Book Update(Book book)
         {
             return _bookRepository.Update(book);
         }
