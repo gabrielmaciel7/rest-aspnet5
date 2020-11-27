@@ -1,11 +1,6 @@
 ﻿using RestWithASPNET5.Models;
-using RestWithASPNET5.Models.Context;
 using RestWithASPNET5.Repositories;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace RestWithASPNET5.Services.Implementations
 {
