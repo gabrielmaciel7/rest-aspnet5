@@ -2,6 +2,7 @@
 using Microsoft.Extensions.Logging;
 using RestWithASPNET5.Services;
 using RestWithASPNET5.Models;
+using RestWithASPNETUdemy.Data.VO;
 
 namespace RestWithASPNET5.Controllers
 {
@@ -39,7 +40,7 @@ namespace RestWithASPNET5.Controllers
         }
 
         [HttpPost]
-        public IActionResult Create([FromBody] Book book)
+        public IActionResult Create([FromBody] BookVO book)
         {
             if (book == null)
             {
@@ -50,7 +51,7 @@ namespace RestWithASPNET5.Controllers
         }
 
         [HttpPut]
-        public IActionResult Update([FromBody] Book book)
+        public IActionResult Update([FromBody] BookVO book)
         {
             if (book == null)
             {
