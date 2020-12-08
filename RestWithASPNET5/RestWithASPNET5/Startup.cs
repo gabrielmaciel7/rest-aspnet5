@@ -4,6 +4,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using RestWithASPNET5.Hypermedia.Enricher;
+using RestWithASPNET5.Hypermedia.Filters;
 using RestWithASPNET5.Models.Context;
 using RestWithASPNET5.Repositories;
 using RestWithASPNET5.Repositories.Implementations;
@@ -43,6 +45,12 @@ namespace RestWithASPNET5
                 MigrationDatabase(connection);
             }
 
+            //Hypermedia
+            var filterOptions = new HyperMediaFilterOptions();
+            filterOptions.ContentResponseEnricherList.Add(new PersonEnricher());
+
+            services.AddSingleton(filterOptions);
+
             // Versioning API
             services.AddApiVersioning();
 
@@ -70,6 +78,7 @@ namespace RestWithASPNET5
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
+                endpoints.MapControllerRoute("DefaultApi", "{controller=values}/{id?}");
             });
         }
 
