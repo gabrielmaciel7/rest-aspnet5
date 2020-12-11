@@ -3,6 +3,7 @@ using Microsoft.Extensions.Logging;
 using RestWithASPNET5.Services;
 using RestWithASPNET5.Models;
 using RestWithASPNETUdemy.Data.VO;
+using System.Collections.Generic;
 
 namespace RestWithASPNET5.Controllers
 {
@@ -21,12 +22,20 @@ namespace RestWithASPNET5.Controllers
         }
 
         [HttpGet]
+        [ProducesResponseType((200), Type = typeof(List<BookVO>))]
+        [ProducesResponseType(204)]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(401)]
         public IActionResult Index()
         {
             return Ok(_bookService.FindAll());
         }
 
         [HttpGet("{id}")]
+        [ProducesResponseType((200), Type = typeof(BookVO))]
+        [ProducesResponseType(204)]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(401)]
         public IActionResult Show(long id)
         {
             var book = _bookService.FindById(id);
@@ -40,6 +49,9 @@ namespace RestWithASPNET5.Controllers
         }
 
         [HttpPost]
+        [ProducesResponseType((200), Type = typeof(BookVO))]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(401)]
         public IActionResult Create([FromBody] BookVO book)
         {
             if (book == null)
@@ -51,6 +63,9 @@ namespace RestWithASPNET5.Controllers
         }
 
         [HttpPut]
+        [ProducesResponseType((200), Type = typeof(BookVO))]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(401)]
         public IActionResult Update([FromBody] BookVO book)
         {
             if (book == null)
@@ -62,6 +77,9 @@ namespace RestWithASPNET5.Controllers
         }
 
         [HttpDelete("{id}")]
+        [ProducesResponseType(204)]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(401)]
         public IActionResult Delete(long id)
         {
             _bookService.Delete(id);
