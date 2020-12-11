@@ -1,9 +1,11 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Rewrite;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.OpenApi.Models;
 using RestWithASPNET5.Hypermedia.Enricher;
 using RestWithASPNET5.Hypermedia.Filters;
 using RestWithASPNET5.Models.Context;
@@ -54,6 +56,22 @@ namespace RestWithASPNET5
             // Versioning API
             services.AddApiVersioning();
 
+            //Swagger
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new OpenApiInfo
+                {
+                    Title = "Rest with ASP.NET 5",
+                    Version = "v1",
+                    Description = "Rest with ASP.NET 5",
+                    Contact = new OpenApiContact
+                    {
+                        Name = "Gabriel Maciel",
+                        Url = new Uri("https://github.com/gabrielmaciel7")
+                    }
+                });
+            });
+
             // Dependency injection
             services.AddScoped<IPersonService, PersonService>();
             services.AddScoped<IBookService, BookService>();
@@ -72,6 +90,16 @@ namespace RestWithASPNET5
             app.UseHttpsRedirection();
 
             app.UseRouting();
+
+            app.UseSwagger();
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "Rest with ASP.NET 5 - v1");
+            });
+
+            var option = new RewriteOptions();
+            option.AddRedirect("^$", "swagger");
+            app.UseRewriter(option);
 
             app.UseAuthorization();
 
