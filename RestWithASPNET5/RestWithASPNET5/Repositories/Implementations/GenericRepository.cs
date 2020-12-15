@@ -55,6 +55,8 @@ namespace RestWithASPNET5.Repositories.Implementations
                 {
                     _context.Entry(result).CurrentValues.SetValues(item);
                     _context.SaveChanges();
+
+                    return result;
                 }
                 catch (Exception)
                 {
