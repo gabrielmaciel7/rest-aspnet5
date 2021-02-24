@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Security.Claims;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -26,8 +27,10 @@ namespace RestWithASPNET5.Services.implementations
             var signinCredentials = new SigningCredentials(secretKey, SecurityAlgorithms.HmacSha256);
 
             var tokenOptions = new JwtSecurityToken
-                (issuer: _configuration.Issuer, audience: _configuration.Audience, claims: claims,
-                    expires: DateTime.Now.AddMinutes(_configuration.Minutes), signingCredentials: signinCredentials);
+            (
+                issuer: _configuration.Issuer, audience: _configuration.Audience, claims: claims,
+                expires: DateTime.Now.AddMinutes(_configuration.Minutes), signingCredentials: signinCredentials
+            );
 
             var tokenString = new JwtSecurityTokenHandler().WriteToken(tokenOptions);
 
@@ -36,12 +39,37 @@ namespace RestWithASPNET5.Services.implementations
 
         public string GenerateRefreshToken()
         {
-            throw new NotImplementedException();
+            var randomNumber = new byte[32];
+
+            using var rng = RandomNumberGenerator.Create();
+            rng.GetBytes(randomNumber);
+
+            return Convert.ToBase64String(randomNumber);
+
         }
 
         public ClaimsPrincipal GetPrincipalFromExpiredToken(string token)
         {
-            throw new NotImplementedException();
+            var tokenValidationParameters = new TokenValidationParameters
+            {
+                ValidateAudience = false,
+                ValidateIssuer = false,
+                ValidateIssuerSigningKey = true,
+                IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration.Secret)),
+                ValidateLifetime = false
+            };
+
+            var tokenHandler = new JwtSecurityTokenHandler();
+            var principal = tokenHandler.ValidateToken(token, tokenValidationParameters, out SecurityToken securityToken);
+            var jwtSecurityToken = securityToken as JwtSecurityToken;
+
+            if (jwtSecurityToken == null
+                || !jwtSecurityToken.Header.Alg.Equals(SecurityAlgorithms.HmacSha256, StringComparison.InvariantCulture))
+            {
+                throw new SecurityTokenException("Invalid token.");
+            }
+
+            return principal;
         }
     }
 }
