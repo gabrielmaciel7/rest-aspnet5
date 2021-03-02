@@ -4,11 +4,13 @@ using RestWithASPNET5.Services;
 using RestWithASPNET5.Models;
 using RestWithASPNETUdemy.Data.VO;
 using System.Collections.Generic;
+using Microsoft.AspNetCore.Authorization;
 
 namespace RestWithASPNET5.Controllers
 {
     [ApiVersion("1")]
     [ApiController]
+    [Authorize("Bearer")]
     [Route("api/[controller]/v{version:apiVersion}")]
     public class BookController : ControllerBase
     {
