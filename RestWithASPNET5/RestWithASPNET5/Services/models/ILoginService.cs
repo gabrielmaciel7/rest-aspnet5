@@ -9,5 +9,6 @@ namespace RestWithASPNET5.Services.models
     public interface ILoginService
     {
         TokenVO ValidateCredentials(UserVO user);
+        TokenVO ValidateCredentials(TokenVO token);
     }
 }
