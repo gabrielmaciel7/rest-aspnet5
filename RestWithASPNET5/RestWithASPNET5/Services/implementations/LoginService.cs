@@ -60,6 +60,9 @@ namespace RestWithASPNET5.Services.implementations
             var refreshToken = token.RefreshToken;
 
             var principal = _tokenService.GetPrincipalFromExpiredToken(accessToken);
+
+            if (principal == null) return null;
+
             var userName = principal.Identity.Name;
             var user = _userRepository.ValidateCredentials(userName);
 

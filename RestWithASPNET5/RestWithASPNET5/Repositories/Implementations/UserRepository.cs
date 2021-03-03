@@ -31,23 +31,20 @@ namespace RestWithASPNET5.Repositories
 
         public User RefreshUserInfo(User user)
         {
-            if (_context.Users.Any(u => u.Id.Equals(user.Id))) return null;
+            var result = _context.Users.Where(x => x.Id.Equals(user.Id)).FirstOrDefault();
 
-            var result = _context.Users.SingleOrDefault(x => x.Id.Equals(user.Id));
+            if (result == null) return null;
 
-            if (result != null)
+            try
             {
-                try
-                {
-                    _context.Entry(result).CurrentValues.SetValues(user);
-                    _context.SaveChanges();
+                _context.Entry(result).CurrentValues.SetValues(user);
+                _context.SaveChanges();
 
-                    return result;
-                }
-                catch (Exception)
-                {
-                    throw;
-                }
+                return result;
+            }
+            catch (Exception)
+            {
+                throw;
             }
 
             return result;

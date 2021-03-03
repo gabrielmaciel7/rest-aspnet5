@@ -9,7 +9,7 @@ namespace RestWithASPNET5.Entities
     {
         [Key]
         [Column("id")]
-        public long Id { get; set; }
+        public int Id { get; set; }
 
         [Column("user_name")]
         public string UserName { get; set; }

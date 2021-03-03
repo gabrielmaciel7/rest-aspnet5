@@ -59,17 +59,25 @@ namespace RestWithASPNET5.Services.implementations
                 ValidateLifetime = false
             };
 
-            var tokenHandler = new JwtSecurityTokenHandler();
-            var principal = tokenHandler.ValidateToken(token, tokenValidationParameters, out SecurityToken securityToken);
-            var jwtSecurityToken = securityToken as JwtSecurityToken;
-
-            if (jwtSecurityToken == null
-                || !jwtSecurityToken.Header.Alg.Equals(SecurityAlgorithms.HmacSha256, StringComparison.InvariantCulture))
+            try
             {
-                throw new SecurityTokenException("Invalid token.");
+                var tokenHandler = new JwtSecurityTokenHandler();
+                var principal = tokenHandler.ValidateToken(token, tokenValidationParameters, out SecurityToken validatedToken);
+                var jwtSecurityToken = validatedToken as JwtSecurityToken;
+
+                if (jwtSecurityToken == null ||
+                    !jwtSecurityToken.Header.Alg.Equals(SecurityAlgorithms.HmacSha256, StringComparison.InvariantCulture))
+                {
+                    throw new SecurityTokenException("Invalid token.");
+                }
+
+                return principal;
+            }
+            catch (Exception)
+            {
+                return null;
             }
 
-            return principal;
         }
     }
 }
