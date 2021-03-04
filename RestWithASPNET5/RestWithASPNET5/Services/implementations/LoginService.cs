@@ -82,5 +82,10 @@ namespace RestWithASPNET5.Services.implementations
             return new TokenVO
                 (true, createdDate.ToString(DATE_FORMAT), expirationDate.ToString(DATE_FORMAT), accessToken, refreshToken);
         }
+
+        public bool RevokeToken(string userName)
+        {
+            return _userRepository.RevokeToken(userName);
+        }
     }
 }

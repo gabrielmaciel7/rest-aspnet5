@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using RestWithASPNET5.Data.VO;
 using RestWithASPNET5.Services.models;
@@ -36,7 +37,7 @@ namespace RestWithASPNET5.Controllers
 
         [HttpPost]
         [Route("refresh")]
-        public IActionResult Refresh([FromBody] TokenVO tokenVO)
+        public IActionResult RefreshToken([FromBody] TokenVO tokenVO)
         {
             if (tokenVO == null) return BadRequest("Invalid client request.");
 
@@ -45,6 +46,19 @@ namespace RestWithASPNET5.Controllers
             if (token == null) return BadRequest("Invalid client request.");
 
             return Ok(token);
+        }
+
+        [HttpPost]
+        [Route("revoke")]
+        [Authorize("Bearer")]
+        public IActionResult RevokeToken()
+        {
+            var userName = User.Identity.Name;
+            var result = _loginService.RevokeToken(userName);
+
+            if (!result) return BadRequest("Invalid client request.");
+
+            return NoContent();
         }
     }
 }
