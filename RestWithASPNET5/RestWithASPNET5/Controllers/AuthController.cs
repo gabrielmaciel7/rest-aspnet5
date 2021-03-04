@@ -48,7 +48,7 @@ namespace RestWithASPNET5.Controllers
             return Ok(token);
         }
 
-        [HttpPost]
+        [HttpGet]
         [Route("revoke")]
         [Authorize("Bearer")]
         public IActionResult RevokeToken()
